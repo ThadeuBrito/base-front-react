@@ -1,8 +1,8 @@
-var gulp = require('gulp');
+var gulp       = require('gulp');
 var browserify = require('browserify');
-var babelify = require('babelify');
-var source = require('vinyl-source-stream');
-var server = require('gulp-server-livereload');
+var babelify   = require('babelify');
+var source     = require('vinyl-source-stream');
+var connect    = require('gulp-connect');
 
 gulp.task('build', function () {
   browserify({
@@ -13,21 +13,26 @@ gulp.task('build', function () {
   .transform(babelify)
   .bundle()
   .pipe(source('bundle.js'))
+  .pipe(connect.reload())
   .pipe(gulp.dest('dist'));
+});
 
-  // Copy
+gulp.task('copy', function() {
   gulp.src('src/index.html')
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('webserver', function() {
-  gulp.src('dist')
-    .pipe(server({
-      livereload: true,
-      open: true,
-      defaultFile: 'index.html'
-    }));
+gulp.task('connect', function() {
+  connect.server({
+    port: 3000,
+    root: 'dist',
+    livereload: true
+  });
 });
 
-gulp.task('default', ['build']);
-gulp.task('server', ['build', 'webserver']);
+gulp.task('watch', function() {
+  gulp.watch('src/**/*.*', ['default'])
+});
+
+gulp.task('default', ['build', 'copy']);
+gulp.task('server', ['default', 'connect', 'watch']);

@@ -1,21 +1,22 @@
-var gulp       = require('gulp');
-var browserify = require('gulp-browserify');
-var concat     = require('gulp-concat');
+var gulp = require('gulp');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var source = require('vinyl-source-stream');
 
-gulp.task('browserify', function() {
-    gulp.src('src/js/main.js')
-      .pipe(browserify({transform:'reactify'}))
-      .pipe(concat('main.js'))
-      .pipe(gulp.dest('dist/js'));
+gulp.task('build', function () {
+  browserify({
+    entries: 'src/js/main.jsx',
+    extensions: ['.jsx'],
+    debug: true
+  })
+  .transform(babelify)
+  .bundle()
+  .pipe(source('bundle.js'))
+  .pipe(gulp.dest('dist'));
+
+  // Copy
+  gulp.src('src/index.html')
+    .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy', function() {
-    gulp.src('src/index.html')
-      .pipe(gulp.dest('dist'));
-});
-
-gulp.task('default',['browserify', 'copy']);
-
-gulp.task('watch', function() {
-    gulp.watch('src/**/*.*', ['default']);
-});
+gulp.task('default', ['build']);

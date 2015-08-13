@@ -1,10 +1,14 @@
+'use strict'
+
 import React from 'react'
+import 'sass/main'
 
 class App extends React.Component{
   render() {
     return (
       <div className="wrapper">
-        <h3>Click this Title, then check consoles</h3>
+        <div className="first">H1</div>
+        <div className="second">H2</div>
       </div>
     )
   }

@@ -6,9 +6,14 @@ import 'sass/main'
 class App extends React.Component{
   render() {
     return (
-      <div className="wrapper">
-        <div className="first">H1</div>
-        <div className="second">H2</div>
+      <div className="main-box">
+        <div className="welcome-text">
+          Welcome to React Boilerplate
+          <div className="author-label">
+            Created by
+            <span className="author-name">Thadeu Brito</span>
+          </div>
+        </div>
       </div>
     )
   }

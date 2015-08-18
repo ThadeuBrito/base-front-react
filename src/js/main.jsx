@@ -1,10 +1,23 @@
 'use strict'
 
 import React from 'react'
-import App from 'js/components/App';
+import Router, {Route} from 'react-router'
+import RouterContainer from 'js/utils/RouterContainer'
+
+import LoginHandler from 'js/components/login/LoginHandler'
+import HomeHandler from 'js/components/home/HomeHandler'
+
 import 'sass/global'
 
-React.render(
-  <App />,
-  document.getElementById('main')
+var routes = (
+  <Route handler={HomeHandler} path="/">
+    <Route name="login" handler={LoginHandler}/>
+  </Route>
 );
+
+var router = Router.create({routes})
+RouterContainer.set(router)
+
+router.run(function (Handler) {
+  React.render( <Handler />, document.getElementById('main') )
+})

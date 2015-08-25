@@ -2,20 +2,17 @@
 
 import React from 'react'
 import {RouteHandler} from 'react-router'
+import Header from 'js/components/share/Header'
 
 import 'sass/home/HomeHandler'
+import 'sass/share/Header'
 
 class HomeHandler extends React.Component{
   render() {
     return (
-      <div className="main-box">
-        <div className="welcome-text">
-          Welcome to React Boilerplate
-          <div className="author-label">
-            Created by
-            <span className="author-name">Thadeu Brito</span>
-          </div>
-        </div>
+      <div className="row">
+        <Header/>
+        home
         <RouteHandler/>
       </div>
     )

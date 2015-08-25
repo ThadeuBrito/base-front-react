@@ -11,7 +11,7 @@ import PageNotFound from 'js/components/pages/NotFound'
 import 'sass/global'
 
 var routes = (
-  <Route handler={HomeHandler} path="/">
+  <Route>
     <DefaultRoute handler={HomeHandler} />
     <Route name="login" handler={LoginHandler}/>
     <NotFoundRoute handler={PageNotFound} />
@@ -22,5 +22,5 @@ var router = Router.create({routes})
 RouterContainer.set(router)
 
 router.run(function (Handler) {
-  React.render( <Handler />, document.getElementById('main') )
+  React.render( <Handler />, document.getElementById('container') )
 })

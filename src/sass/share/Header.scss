@@ -7,17 +7,41 @@
     background: url('../../assets/images/logo-name.png');
     width: 272px;
     height: 60px;
+    float: left;
     background-size: contain;
     background-repeat: no-repeat;
   }
   .add-point {
-    float: right;
-    height: 58px;
     width: 250px;
-    line-height: 56px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.23);
   }
-  span {
+
+  .item-menu {
+    float: left;
+    text-align: center;
+    a {
+      line-height: 4.2;
+      color: #9E9E9E;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  }
+  .who-we-are {
+    float: right;
+  }
+  .make-dog-home {
+    float: left
+  }
+  .separator-point {
     line-height: 4.2;
-    margin: 0 50px;
+    margin: 0px;
+    float: left;
+    color: #D8D8D8
+  }
+  .hello-user {
+    line-height: 4.2;
+    text-align: center;
+    color: #686868;
+    font-size: 1.4rem;
   }
 }

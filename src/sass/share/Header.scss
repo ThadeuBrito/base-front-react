@@ -16,6 +16,17 @@
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.23);
   }
 
+  .login-facebook {
+    background-color: #4863A0;
+    border: 1px solid #4863A0;
+    color: white;
+    box-shadow: 0px 3px 0px rgba(72, 99, 160, 0.5);
+    &:hover {
+      color: white;
+      border: 1px solid #4863A0;
+    }
+  }
+
   .item-menu {
     float: left;
     text-align: center;
@@ -23,14 +34,14 @@
       line-height: 4.2;
       color: #9E9E9E;
       text-decoration: none;
-      font-weight: 600;
+      font-family: 'Hanken-Book'
     }
   }
   .who-we-are {
     float: right;
   }
   .make-dog-home {
-    float: left
+    float: left;
   }
   .separator-point {
     line-height: 4.2;
@@ -40,8 +51,18 @@
   }
   .hello-user {
     line-height: 4.2;
-    text-align: center;
+    text-align: right;
     color: #686868;
     font-size: 1.4rem;
+    display: inline-block;
+    width: auto;
+    margin-right: 20px;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-middle {
   }
 }

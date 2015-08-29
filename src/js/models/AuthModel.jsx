@@ -1,10 +1,12 @@
 import request from 'reqwest';
+import {HOST} from 'js/constants/BaseConstants'
+import {PATH} from 'js/constants/AuthConstants'
 
 class AuthModel {
 
   login(email, password, success) {
     request({
-      url: 'http://localhost:3001/auth/login',
+      url: `${HOST.URL}${PATH.LOGIN}`,
       method: 'POST',
       crossOrigin: true,
       type: 'json',

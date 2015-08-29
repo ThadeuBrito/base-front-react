@@ -1,32 +1,56 @@
 'use strict'
 
 import React from 'react'
+import AuthActions from 'js/actions/AuthActions'
+import AuthStore from 'js/stores/AuthStore'
 
 export default class Header extends React.Component {
 
   constructor() {
     super()
-    this.state = {
-      user: '',
-      password: ''
-    }
+    this.state = this._getAuthState();
+  }
+
+  _getAuthState() {
+    return {
+      user: AuthStore.user
+    };
+  }
+
+  _onChange() {
+     this.setState(this._getAuthState());
+  }
+
+  componentDidMount() {
+    AuthStore.addChangeListener(this._onChange.bind(this));
   }
 
   renderLoginButton() {
-    if (false) {
-      return <a className="button login-facebook" href={this.state.user}>Logar com o Face</a>
+  if (!AuthStore.isLoggedIn()) {
+      return (
+        <div>
+          <a className="button login-facebook" onClick={this.login.bind(this)}>Logar com o Face</a>
+        </div>
+      )
     }
   }
 
   renderAddPointButton() {
-    if (true) {
-      return (
-        <div>
-          <div className="hello-user">Oi, Thadeu Brito (sair)</div>
-          <a className="button button-primary add-point" href="#">Adicionar ponto</a>
-        </div>
-      )
-    }
+    if (AuthStore.isLoggedIn())
+      return ( <a className="button button-primary add-point" href="#">Adicionar ponto</a> )
+  }
+
+  renderUserInformation() {
+    if (AuthStore.isLoggedIn())
+      return <div className="hello-user">Oi, {AuthStore.user.first_name} (<a href='#' onClick={this.logout}>sair</a>)</div>
+  }
+
+  login() {
+    AuthActions.login('example@dominio.com', '123456');
+  }
+
+  logout() {
+    AuthActions.logout()
   }
 
   render() {
@@ -52,7 +76,10 @@ export default class Header extends React.Component {
 
         <div className="five columns header-right">
           {this.renderLoginButton()}
-          {this.renderAddPointButton()}
+          <div>
+            {this.renderUserInformation()}
+            {this.renderAddPointButton()}
+          </div>
         </div>
       </div>
     )

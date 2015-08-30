@@ -55,30 +55,32 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <div className="twelve columns header">
-        <div className="four columns">
-          <div className="logo"/>
-        </div>
+      <div className="row">
+        <div className="twelve columns header">
+          <div className="four columns">
+            <div className="logo"/>
+          </div>
 
-        <div className="three columns header-middle">
-          <div className="six columns">
-            <div className="item-menu who-we-are">
-              <a href="#">Quem somos</a>
+          <div className="three columns header-middle">
+            <div className="six columns">
+              <div className="item-menu who-we-are">
+                <a href="#">Quem somos</a>
+              </div>
+            </div>
+
+            <div className="six columns">
+              <div className="item-menu make-dog-home">
+                <a href="#">Faça sua casinha</a>
+              </div>
             </div>
           </div>
 
-          <div className="six columns">
-            <div className="item-menu make-dog-home">
-              <a href="#">Faça sua casinha</a>
+          <div className="five columns header-right">
+            {this.renderLoginButton()}
+            <div>
+              {this.renderUserInformation()}
+              {this.renderAddPointButton()}
             </div>
-          </div>
-        </div>
-
-        <div className="five columns header-right">
-          {this.renderLoginButton()}
-          <div>
-            {this.renderUserInformation()}
-            {this.renderAddPointButton()}
           </div>
         </div>
       </div>

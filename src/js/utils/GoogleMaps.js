@@ -1,4 +1,23 @@
-export default {  
+export default {
+
+  createMap(element, options) {
+    return new google.maps.Map(document.getElementById(element), options);
+  },
+
+  defineHeight(element) {
+    window.document.getElementById(element).style.height = (window.innerHeight - 100)+'px'
+  },
+
+  centralize(map) {
+
+      debugger
+    google.maps.event.addDomListener(window, 'resize', () => {
+      GoogleMaps.defineHeight('map_canvas')
+      map.setCenter(map.getCenter())
+    })
+
+
+  }
   // init() {
   //   this.loadScript(function() {
   //     let map = new google.maps.Map(document.getElementById('map'), {

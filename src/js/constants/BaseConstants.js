@@ -1,5 +1,5 @@
 export default {
   HOST: {
-    URL: 'http://localhost:3001'
+    URL: 'http://localhost:3000'
   }
 }

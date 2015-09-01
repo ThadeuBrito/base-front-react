@@ -2,10 +2,35 @@
 
 import React from 'react'
 
+import PointActions from 'js/actions/PointActions'
+import PointStore from 'js/stores/PointStore'
+
+import GoogleMaps from 'js/utils/GoogleMaps'
+
 import 'sass/map/Map'
 
 class Map extends React.Component{
 
+  constructor() {
+    super()
+    this.state = this._getInitialState();
+  }
+
+  _getInitialState() {
+    return {
+      points: PointStore.points
+    };
+  }
+
+  _onChange() {
+     this.setState(this._getInitialState());
+  }
+
+  componentDidMount() {
+    PointStore.addChangeListener(this._onChange.bind(this));
+    this.buildMap()
+    PointActions.list()
+  }
 
   getCurrentPosition() {
     if (navigator.geolocation)
@@ -14,30 +39,45 @@ class Map extends React.Component{
       });
   }
 
-  loadMarkers(map) {
-    var marker = new google.maps.Marker({
-      position: {lat: -27.1272657, lng: -48.6043775},
-      map: map,
-      title: 'Hello World!'
-    });
-  }
-
-  componentDidMount() {
-    window.document.getElementById('map_canvas').style.height = (window.innerHeight - 100)+'px'
+  buildMap() {
+    GoogleMaps.defineHeight('map_canvas')
 
     const mapOptions = {
       center: {lat: -27.1272657, lng: -48.6043775},
-      zoom: 18
+      zoom: 16
     }
-    const map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    const map = GoogleMaps.createMap('map_canvas', mapOptions);
 
-    let center = map.getCenter();
-    google.maps.event.addDomListener(window, 'resize', function() {
-        window.document.getElementById('map_canvas').style.height = (window.innerHeight - 100)+'px'
-        map.setCenter(center);
+    google.maps.event.addDomListener(window, 'resize', () => {
+      GoogleMaps.defineHeight('map_canvas')
+      map.setCenter(map.getCenter());
+    })
+
+    // Add points when load
+    google.maps.event.addDomListener(window, 'load', () => {
+      this.renderPoints(map);
+    })
+
+    // Update points when change zoom
+    map.addListener('zoom_changed', () => {
+      console.log(`zoom: ${map.zoom}, lat: ${map.center.lat()}, lng: ${map.center.lng()}`)
+    })
+
+  }
+
+  renderPoints(map) {
+    let points = this.state.points
+    points.map( (point) => {
+      let marker = new google.maps.Marker({
+        position: new google.maps.LatLng(point.latitude, point.longitude),
+        map: map,
+        point: point
+      })
+
+      marker.addListener('click', function() {
+        console.log(this.point)
+      });
     });
-
-    this.loadMarkers(map)
   }
 
   render() {

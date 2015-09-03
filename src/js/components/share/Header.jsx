@@ -4,6 +4,9 @@ import React from 'react'
 import AuthActions from 'js/actions/AuthActions'
 import AuthStore from 'js/stores/AuthStore'
 
+import SideBarActions from 'js/actions/SideBarActions'
+import SideBar from 'js/components/share/SideBar'
+
 export default class Header extends React.Component {
 
   constructor() {
@@ -37,7 +40,7 @@ export default class Header extends React.Component {
 
   renderAddPointButton() {
     if (AuthStore.isLoggedIn())
-      return ( <a className="button button-primary add-point" href="#">Adicionar ponto</a> )
+      return ( <a className="button button-primary add-point" onClick={this.renderAddPointForm.bind(this)}>Adicionar ponto</a> )
   }
 
   renderUserInformation() {
@@ -51,6 +54,16 @@ export default class Header extends React.Component {
 
   logout() {
     AuthActions.logout()
+  }
+
+  renderAddPointForm() {
+    SideBarActions.open(this.newPointForm)
+  }
+
+  newPointForm() {
+    return(
+      <h1>Thadeu</h1>
+    )
   }
 
   render() {

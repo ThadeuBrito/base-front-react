@@ -4,6 +4,10 @@ import React from 'react'
 
 import PointActions from 'js/actions/PointActions'
 import PointStore from 'js/stores/PointStore'
+import SideBarActions from 'js/actions/SideBarActions'
+import SideBar from 'js/components/share/SideBar'
+
+import PointInfo from 'js/components/point/PointInfo'
 
 import GoogleMaps from 'js/utils/GoogleMaps'
 
@@ -18,12 +22,13 @@ class Map extends React.Component{
 
   _getInitialState() {
     return {
-      points: PointStore.points
+      points: PointStore.points,
+      map: null
     };
   }
 
   _onChange() {
-     this.setState(this._getInitialState());
+    this.setState(this._getInitialState());
   }
 
   componentDidMount() {
@@ -55,7 +60,8 @@ class Map extends React.Component{
 
     // Add points when load
     google.maps.event.addDomListener(window, 'load', () => {
-      this.renderPoints(map);
+      this.setState({map: map})
+      this.renderPoints()
     })
 
     // Update points when change zoom
@@ -65,19 +71,32 @@ class Map extends React.Component{
 
   }
 
-  renderPoints(map) {
+  renderPoints() {
     let points = this.state.points
+
     points.map( (point) => {
+
       let marker = new google.maps.Marker({
         position: new google.maps.LatLng(point.latitude, point.longitude),
-        map: map,
+        map: this.state.map,
         point: point
       })
 
       marker.addListener('click', function() {
-        console.log(this.point)
-      });
+        this.openSideBar(marker.point)
+      }.bind(this));
+
     });
+  }
+
+  openSideBar(point) {
+    SideBarActions.open(this.pointInfor.bind(this, point))
+  }
+
+  pointInfor(point) {
+    return(
+      <PointInfo point={point}/>
+    )
   }
 
   render() {
